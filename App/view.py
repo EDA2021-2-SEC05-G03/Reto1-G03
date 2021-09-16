@@ -96,8 +96,17 @@ while True:
         print ("2. Shell Sort")
         print ("3. Merge Sort")
         print ("4. Quick Sorts")
-       # sortedartworks = controller.sortartworks(catalog,sizesublist,typeofsort)
-
+        typeofsort = int(input("Si digita una opción invalida se escojerá por defecto quick sort: "))
+        if typeofsort == 1: 
+            typeofsort = "insertion"
+        elif typeofsort == 2:
+            typeofsort = "shell"
+        elif typeofsort ==3:
+            typeofsort = "merge"
+        else:
+            typeofsort = "quick"
+        sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
+        print(sortedartworkstime)          
             
     else:
         sys.exit(0)
