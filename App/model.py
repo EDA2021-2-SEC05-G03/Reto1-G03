@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import quicksort as qs
 assert cf
 from datetime import datetime
 import time
+import controller
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
