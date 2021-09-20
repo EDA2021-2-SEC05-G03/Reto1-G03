@@ -65,8 +65,9 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
         artwork1["DateAcquired"] = "0001-01-01"
     if artwork2["DateAcquired"] == None or artwork2["DateAcquired"] == "":
         artwork2["DateAcquired"] = "0001-01-01"
-
-    return datetime.strptime(artwork1["DateAcquired"], "%Y-%m-%d") < datetime.strptime(artwork2["DateAcquired"], "%Y-%m-%d")
+    artwork1 = datetime.strptime(artwork1["DateAcquired"], "%Y-%m-%d")
+    artwork2 = datetime.strptime(artwork2["DateAcquired"], "%Y-%m-%d")
+    return artwork1 < artwork2
 
 
 def cmpArtistDate(artist1, artist2):
@@ -114,9 +115,25 @@ def sortartistsDates(catalog, begin, end):
     listarespuesta = lt.newList(datastructure="ARRAY_LIST")
     for artista in lt.iterator(sorted_list):
         if int(artista["BeginDate"]) >= int(begin) and int(artista["BeginDate"]) < (int(end)+1):
-            print(artista["BeginDate"])
             lt.addLast(listarespuesta, artista)
     return lt.size(listarespuesta)
+
+def sortartworks2 (catalog,begin,end):
+    sublist = catalog["artworks"]
+    sublist = sublist.copy()
+    sorted_list = ms.sort(sublist, cmpArtworkByDateAcquired)
+    listarespuesta = lt.newList(datastructure="ARRAY_LIST")
+    compradasporpurchase = 0
+    for artwork in lt.iterator(sorted_list):
+        if artwork["DateAcquired"] >= begin and artwork["DateAcquired"] <= end:
+            lt.addLast(listarespuesta, artwork)
+            if artwork["CreditLine"].lower() == "purchase":
+                compradasporpurchase += 1
+
+    totalobras = lt.size(listarespuesta)
+    return totalobras, compradasporpurchase
+
+
 
 
     

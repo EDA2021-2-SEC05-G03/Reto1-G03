@@ -57,6 +57,9 @@ def loadArtists(catalog):
 def sortartworks(catalog,sizesublist,typeofsort):
     return model.sortartworks(catalog,sizesublist,typeofsort)
 
+def sortartworks2(catalog,begin,end):
+    return model.sortartworks2(catalog,begin,end)
+
 def sortartistsDates(catalog,begin,end):
     return model.sortartistsDates(catalog,begin,end)
 

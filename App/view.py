@@ -28,6 +28,7 @@ from DISClib.ADT import list as lt
 from time import process_time
 assert cf
 import sys
+from datetime import datetime
 
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
@@ -126,7 +127,26 @@ while True:
         else:
             info = controller.sortartistsDates(catalog,begin,end)
         
-            print("Hay un total de "+ str(info) + " artistas entre " + str(begin)+ " - "+ str(end))              
+            print("Hay un total de "+ str(info) + " artistas entre " + str(begin)+ " - "+ str(end))    
+    elif int(inputs[0]) == 4:
+        begin = (input("Indique la fecha inicial del rango en formato numérico año-mes-día: "))
+        end = (input("Indique la fecha final del rango en formato numérico año-mes-día: "))
+        a = len(str(begin))
+        b = len(str(end))
+        datetime.strptime(end, "%Y-%m-%d")
+        datetime.strptime(begin, "%Y-%m-%d")
+
+        if a != 10:
+            print("Inserte una fecha válida.")
+        elif b != 10:
+            print("Inserte una fecha válida.")
+        elif begin > end:
+            print("La fecha de fin no puede ser menor que la de inicio.")
+        else:
+            info = controller.sortartworks2(catalog,begin,end)
+            print ("Numero de obras:" + str(info[0]))
+            print ("Adquiridas por purchase: " + str(info[1]))
+            
     else:
         sys.exit(0)
 sys.exit(0)
