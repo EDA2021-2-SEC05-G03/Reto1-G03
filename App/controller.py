@@ -57,6 +57,8 @@ def loadArtists(catalog):
 def sortartworks(catalog,sizesublist,typeofsort):
     return model.sortartworks(catalog,sizesublist,typeofsort)
 
+def sortartistsDates(catalog,begin,end):
+    return model.sortartistsDates(catalog,begin,end)
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.

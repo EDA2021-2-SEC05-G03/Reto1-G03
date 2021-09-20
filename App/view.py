@@ -111,7 +111,22 @@ while True:
         else:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
-        print(sortedartworkstime)          
+        print(sortedartworkstime) 
+    elif int(inputs[0]) == 3:   
+        begin = int(input("Indique el año inicial del rango: "))
+        end = int(input("Indique el año final del rango: "))
+        a = len(str(begin))
+        b = len(str(end))
+        if a != 4:
+            print("Inserte un año válido.")
+        elif b != 4:
+            print("Inserte un año válido.")
+        elif begin > end:
+            print("La fecha de fin no puede ser menor que la de inicio.")
+        else:
+            info = controller.sortartistsDates(catalog,begin,end)
+        
+            print("Hay un total de "+ str(info) + " artistas entre " + str(begin)+ " - "+ str(end))              
     else:
         sys.exit(0)
 sys.exit(0)

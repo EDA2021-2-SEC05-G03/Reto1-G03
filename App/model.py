@@ -111,6 +111,13 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     return datetime.strptime(artwork1["DateAcquired"], "%Y-%m-%d") < datetime.strptime(artwork2["DateAcquired"], "%Y-%m-%d")
 
 
+def cmpArtistDate(artist1, artist2):
+    if artist1["BeginDate"] == None or artist1["BeginDate"] == "":
+        artist1["BeginDate"] = "0"
+    if artist2["BeginDate"] == None or artist2["BeginDate"] == "":
+        artist2["BeginDate"] = "0"
+    n = (float(artist1['BeginDate']) < float(artist2['BeginDate']))
+    return n
 
 
 # Construccion de modelos
@@ -132,7 +139,7 @@ def sortartworks(catalog, sizesublist, typeofsort):
     if typeofsort == "insertion":
         sorted_list = ins.sort(sub_list, cmpArtworkByDateAcquired)
     elif typeofsort == "shell":
-        sorted_list = ss.sort(sub_list, cmpArtworkByDateAcquired)
+        sorted_list = ss.sort(sub_list, cmpArtworkByDateAcquired)       
     elif typeofsort == "merge":
         sorted_list = ms.sort(sub_list, cmpArtworkByDateAcquired)
     elif typeofsort == "quick":
@@ -141,3 +148,55 @@ def sortartworks(catalog, sizesublist, typeofsort):
     tiempo = (stop_time - start_time)*1000
     elapsed_time_mseg = round(tiempo, 2)
     return elapsed_time_mseg 
+
+def sortartistsDates(catalog, begin, end):
+    art = catalog["artists"]
+    s = lt.size(art) 
+       
+    sub_list = lt.subList(art,1,s)
+    sub_list = sub_list.copy()
+    sorted_list = ms.sort(sub_list,cmpArtistDate) 
+    elm = sorted_list["elements"]
+   # print(sorted_list)
+    
+    pos1 = lt.newList("ARRAY_LIST")
+    pos2 = lt.newList("ARRAY_LIST")
+    for i in elm:        
+        a = i["BeginDate"]   
+            
+        ai = int(a)
+        lt.addLast(pos1,a)
+        if ai >= begin:
+            posartista1 = lt.isPresent(pos1, a)                   
+            for j in elm:                
+                b = j["BeginDate"]  
+               # print(b)              
+                if b == None:
+                    bi = 0
+                else:
+                    bi = int(b) 
+                lt.addLast(pos2,b)             
+                if bi == end + 1:
+                    lt.removeLast(pos2)
+                    last = lt.size(pos2)
+                    first = lt.size(pos1)
+                    #print(pos2)
+                    t = last - first                            
+                    lo = lt.subList(sorted_list, posartista1, t)
+                    print(last, first)
+                    break
+            break            
+        elif ai >= end:
+            break
+        else:
+            None
+    return t
+               
+
+
+        
+       
+       
+    
+        
+
