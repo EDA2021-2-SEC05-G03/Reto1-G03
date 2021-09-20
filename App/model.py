@@ -51,10 +51,7 @@ def newCatalog(tipolista: str):
 
 def addArtwork(catalog, artwork):  
     lt.addLast(catalog["artworks"], artwork)
-    artists = artwork["ConstituentID"].strip("[]")
-    artists = artwork["ConstituentID"].split(",")
-    for artist in artists:
-        addArtistArtWork(catalog,artist,artwork)
+
   
 
 def addArtistArtWork(catalog,artistname,artwork):
@@ -74,23 +71,7 @@ def newArtist(name):
     return artist
 
 def addArtists(catalog,artist):
-    ConstituentID = artist["ConstituentID"]
-    posartista = lt.isPresent(catalog["artists"], ConstituentID)
-    if posartista > 0:
-        nombre = lt.getElement(catalog["artists"],posartista)
-        nombre["DisplayName"] = artist["DisplayName"]
-        nombre["Nationality"] = artist["Nationality"]
-        nombre["Gender"] = artist["Gender"]
-        nombre["BeginDate"] = artist["BeginDate"]
-        nombre["EndDate"] = artist["EndDate"]
-    else:
-        nombre = newArtist (ConstituentID)
-        nombre["DisplayName"] = artist["DisplayName"]
-        nombre["Nationality"] = artist["Nationality"]
-        nombre["Gender"] = artist["Gender"]
-        nombre["BeginDate"] = artist["BeginDate"]
-        nombre["EndDate"] = artist["EndDate"]
-        lt.addLast(catalog["artists"], nombre)
+    lt.addLast(catalog["artists"], artist)
 
 
     
@@ -100,7 +81,7 @@ def addArtists(catalog,artist):
 def compareartists(artistname1, artist):
     if (artistname1.lower() in artist['ConstituentID'].lower()):
         return 0
-    return -1
+    return 1
 
 def cmpArtworkByDateAcquired(artwork1, artwork2):
     if artwork1["DateAcquired"] == None or artwork1["DateAcquired"] == "":
@@ -116,7 +97,7 @@ def cmpArtistDate(artist1, artist2):
         artist1["BeginDate"] = "0"
     if artist2["BeginDate"] == None or artist2["BeginDate"] == "":
         artist2["BeginDate"] = "0"
-    n = (float(artist1['BeginDate']) < float(artist2['BeginDate']))
+    n = (int(artist1['BeginDate']) < int(artist2['BeginDate']))
     return n
 
 
