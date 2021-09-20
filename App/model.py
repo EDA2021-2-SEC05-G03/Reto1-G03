@@ -151,46 +151,17 @@ def sortartworks(catalog, sizesublist, typeofsort):
 
 def sortartistsDates(catalog, begin, end):
     art = catalog["artists"]
-    s = lt.size(art) 
-       
-    sub_list = lt.subList(art,1,s)
-    sub_list = sub_list.copy()
-    sorted_list = ms.sort(sub_list,cmpArtistDate) 
-    elm = sorted_list["elements"]
-   # print(sorted_list)
+    sub_list = art.copy()
+    sorted_list = ms.sort(sub_list,cmpArtistDate)
+    listarespuesta = lt.newList(datastructure="ARRAY_LIST")
+    for artista in lt.iterator(sorted_list):
+        if int(artista["BeginDate"]) >= int(begin) and int(artista["BeginDate"]) < (int(end)+1):
+            print(artista["BeginDate"])
+            lt.addLast(listarespuesta, artista)
+    return lt.size(listarespuesta)
+
+
     
-    pos1 = lt.newList("ARRAY_LIST")
-    pos2 = lt.newList("ARRAY_LIST")
-    for i in elm:        
-        a = i["BeginDate"]   
-            
-        ai = int(a)
-        lt.addLast(pos1,a)
-        if ai >= begin:
-            posartista1 = lt.isPresent(pos1, a)                   
-            for j in elm:                
-                b = j["BeginDate"]  
-               # print(b)              
-                if b == None:
-                    bi = 0
-                else:
-                    bi = int(b) 
-                lt.addLast(pos2,b)             
-                if bi == end + 1:
-                    lt.removeLast(pos2)
-                    last = lt.size(pos2)
-                    first = lt.size(pos1)
-                    #print(pos2)
-                    t = last - first                            
-                    lo = lt.subList(sorted_list, posartista1, t)
-                    print(last, first)
-                    break
-            break            
-        elif ai >= end:
-            break
-        else:
-            None
-    return t
                
 
 
