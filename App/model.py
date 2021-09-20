@@ -52,31 +52,8 @@ def newCatalog(tipolista: str):
 def addArtwork(catalog, artwork):  
     lt.addLast(catalog["artworks"], artwork)
 
-  
-
-def addArtistArtWork(catalog,artistname,artwork):
-    artists = catalog["artists"]
-    posartist = lt.isPresent(artists,artistname)
-    if posartist >0:
-        artist = lt.getElement(artists, posartist)
-    else:
-        artist = newArtist (artistname)
-        lt.addLast(artists, artist)
-    lt.addLast(artist["artworks"], artwork)
-
-def newArtist(name):
-    artist = {"ConstituentID":"" , "artworks": None , "DisplayName":"" , "Nationality":"" , "Gender": "" , "BeginDate":None , "EndDate":None}
-    artist["ConstituentID"] = name
-    artist["artworks"] = lt.newList("ARRAY_LIST")
-    return artist
-
 def addArtists(catalog,artist):
     lt.addLast(catalog["artists"], artist)
-
-
-    
-    
-
 
 def compareartists(artistname1, artist):
     if (artistname1.lower() in artist['ConstituentID'].lower()):
