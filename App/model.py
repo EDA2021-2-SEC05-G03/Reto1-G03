@@ -150,7 +150,22 @@ def sortartworks2 (catalog,begin,end):
         lt.addLast(listarespuesta3y3,artwork)
     return totalobras, compradasporpurchase, listarespuesta3y3
 
-
+def Clasification(catalog, artist):
+    art = catalog["artists"]
+    medio_obras = lt.newList("ARRAY_LIST")
+    for a in lt.iterator(art):
+        if a["DisplayName"] == artist:
+            id = a["ConstituentID"]
+    print(id)
+    artworks = catalog["artworks"]
+    
+    for w in lt.iterator(artworks):       
+        if w["ConstituentID"].strip("[]") == id:                    
+            medium = w["Medium"]
+            #pos = lt.isPresent(medio_obras,medium)
+            lt.addLast(medio_obras,medium)
+       
+    print(medio_obras)
 
 
     

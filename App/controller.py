@@ -63,6 +63,9 @@ def sortartworks2(catalog,begin,end):
 def sortartistsDates(catalog,begin,end):
     return model.sortartistsDates(catalog,begin,end)
 
+def artworksClasification(catalog, artista):
+    return model.Clasification(catalog,artista)
+
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """

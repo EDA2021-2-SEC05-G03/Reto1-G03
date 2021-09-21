@@ -215,6 +215,10 @@ while True:
             listaartistas = lt.newList(datastructure= "ARRAY_LIST", cmpfunction= cmpfunctionlistaartistas)
             x = agregarlistaartistas(listaartistas, info[2])
             printsortartworks(info[2],x)
+    elif int(inputs[0]) == 5:  
+        artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
+        info = controller.artworksClasification(catalog, artista)
+        print(info)
             
     else:
         sys.exit(0)
