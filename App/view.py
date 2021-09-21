@@ -219,29 +219,25 @@ while True:
         artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
         info = controller.artworksClasification(catalog, artista)
         tamaño_total_obras = lt.size(info)
-        copia_info = info.copy()
-        
         tamaño_medios = lt.newList(datastructure= "ARRAY_LIST")
-        count=0
+        contadorif = 0
+        contadorelse = 0
         for medio in lt.iterator(info):
-            
-            count += 1
-            print(count)
-            """
-            nombre_medio = medio
-            repeticiones = 1
-            lt.removeFirst(copia_info)
-            presente = lt.isPresent(copia_info, nombre_medio)
-            while presente > 0:
-                repeticiones +=1
-                lt.deleteElement(copia_info, presente)
-                presente = lt.isPresent(copia_info, nombre_medio)
-            lt.addLast(tamaño_medios, nombre_medio)
-            lt.addLast(tamaño_medios, repeticiones)
-            """
-         
-        
-            
+            posicion = lt.isPresent(tamaño_medios,medio)
+            if posicion == 0:
+                contadorif += 1
+                lt.addLast(tamaño_medios, medio)
+                lt.addLast(tamaño_medios, str(1))
+            else:
+                contadorelse += 1
+                x = lt.getElement(tamaño_medios, (posicion + 1))
+                x = int(x) + 1
+                x = str(x)
+                lt.deleteElement(tamaño_medios, posicion+1)
+                lt.insertElement(tamaño_medios, x, posicion+1)
+        # Imprimir tamaño_medios
+        for x in lt.iterator(tamaño_medios):
+            print (x)
     else:
         sys.exit(0)
 sys.exit(0)
