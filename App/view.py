@@ -20,7 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from time import process_time
+
 import config as cf
 import sys
 import controller
@@ -69,6 +69,65 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 catalog = None
+
+def printsortartist(lista):
+    for artists in lt.iterator(lista):
+        print("Nombre: " + artists["DisplayName"])
+        print("Fecha de Nacimiento: " + artists["BeginDate"])
+        print("Fecha de fallecimiento: " + artists["EndDate"])
+        print("Nacionalidad: " + artists["Nationality"])
+        print("Género: " + artists["Gender"])
+        print("-" * 100)
+
+def printsortartworks(lista, listaartistas):
+    print("-" * 100)
+    for artworks in lt.iterator(lista):
+        print ("Titulo: " + artworks["Title"])
+        print ("Fecha: " + artworks["Date"])
+        print ("Medio: " + artworks ["Medium"])
+        print ("Dimensiones: " + artworks["Dimensions"])
+        print ("Artistas: ")
+        artworks["ConstituentID"] = artworks["ConstituentID"].replace(" ", "")
+        artworks["ConstituentID"] = artworks["ConstituentID"].replace("[", "")
+        artworks["ConstituentID"] = artworks["ConstituentID"].replace("]", "")
+        if len(artworks["ConstituentID"]) > 4:
+            lista = artworks["ConstituentID"].split(",")
+            for artista in lista:
+                posartista = lt.isPresent(listaartistas, artista)
+                posartista = posartista - 1
+                nombre = lt.getElement(listaartistas,posartista)
+                nombre = nombre["DisplayName"]
+                print (nombre)
+            print ("-"*100)
+        else: 
+            posartista = lt.isPresent(listaartistas,artworks["ConstituentID"])
+            posartista = posartista - 1
+            nombre = lt.getElement(listaartistas, posartista)
+            nombre = nombre["DisplayName"]
+            print (nombre)
+            print ("-"*100)
+
+
+def agregarlistaartistas(listaartistas, listabuscar):
+    listafinal = lt.newList(datastructure="ARRAY_LIST",cmpfunction=cmpfunctionlistaartistas)
+    for artwork in lt.iterator(listabuscar):
+        listaCI = artwork["ConstituentID"].split(",")
+        for artist in listaCI:
+            lt.addLast(listaartistas, artist)
+    for artista in lt.iterator(catalog["artists"]):
+        posartista = lt.isPresent(listaartistas, artista["ConstituentID"])
+        if posartista > 0:
+            lt.addLast(listafinal, artista)
+            lt.addLast(listafinal, artista["ConstituentID"])
+    return listafinal
+
+
+def cmpfunctionlistaartistas (artist1,artist2):
+    if artist1 in artist2:
+        return 0
+    else:
+        return 1
+        
 """
 Menu principal
 """
@@ -93,6 +152,8 @@ while True:
         t2 = process_time()
         time = t2-t1
         print("El tiempo para cargar los archivos fue de:", str(time) , "s")     
+
+
     elif int(inputs[0]) == 2:
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
         while lt.size(catalog["artworks"]) <= sizesublist:
@@ -113,6 +174,8 @@ while True:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
         print(sortedartworkstime) 
+
+
     elif int(inputs[0]) == 3:   
         begin = int(input("Indique el año inicial del rango: "))
         end = int(input("Indique el año final del rango: "))
@@ -126,8 +189,12 @@ while True:
             print("La fecha de fin no puede ser menor que la de inicio.")
         else:
             info = controller.sortartistsDates(catalog,begin,end)
-        
-            print("Hay un total de "+ str(info) + " artistas entre " + str(begin)+ " - "+ str(end))    
+            print("Hay un total de "+ str(info[0]) + " artistas entre " + str(begin)+ " - "+ str(end))   
+            printsortartist(info[1]) 
+            
+
+
+
     elif int(inputs[0]) == 4:
         begin = (input("Indique la fecha inicial del rango en formato numérico año-mes-día: "))
         end = (input("Indique la fecha final del rango en formato numérico año-mes-día: "))
@@ -135,7 +202,6 @@ while True:
         b = len(str(end))
         datetime.strptime(end, "%Y-%m-%d")
         datetime.strptime(begin, "%Y-%m-%d")
-
         if a != 10:
             print("Inserte una fecha válida.")
         elif b != 10:
@@ -144,8 +210,11 @@ while True:
             print("La fecha de fin no puede ser menor que la de inicio.")
         else:
             info = controller.sortartworks2(catalog,begin,end)
-            print ("Numero de obras:" + str(info[0]))
+            print ("Numero de obras: " + str(info[0]))
             print ("Adquiridas por purchase: " + str(info[1]))
+            listaartistas = lt.newList(datastructure= "ARRAY_LIST", cmpfunction= cmpfunctionlistaartistas)
+            x = agregarlistaartistas(listaartistas, info[2])
+            printsortartworks(info[2],x)
             
     else:
         sys.exit(0)

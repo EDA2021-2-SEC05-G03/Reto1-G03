@@ -116,7 +116,16 @@ def sortartistsDates(catalog, begin, end):
     for artista in lt.iterator(sorted_list):
         if int(artista["BeginDate"]) >= int(begin) and int(artista["BeginDate"]) < (int(end)+1):
             lt.addLast(listarespuesta, artista)
-    return lt.size(listarespuesta)
+    totalartistas = lt.size(listarespuesta)
+    sublista1 = lt.subList(listarespuesta,1,3)
+    sublista2 = lt.subList(listarespuesta,(totalartistas-2),3)
+    listarespuesta3y3 = lt.newList(datastructure="ARRAY_LIST")
+    for artista in lt.iterator(sublista1):
+        lt.addLast(listarespuesta3y3,artista)
+    for artista in lt.iterator(sublista2):
+        lt.addLast(listarespuesta3y3,artista)
+
+    return totalartistas, listarespuesta3y3
 
 def sortartworks2 (catalog,begin,end):
     sublist = catalog["artworks"]
@@ -127,11 +136,19 @@ def sortartworks2 (catalog,begin,end):
     for artwork in lt.iterator(sorted_list):
         if artwork["DateAcquired"] >= begin and artwork["DateAcquired"] <= end:
             lt.addLast(listarespuesta, artwork)
-            if artwork["CreditLine"].lower() == "purchase":
+            acomparar = artwork["CreditLine"].lower()
+            acomparar = acomparar.find("purchase")
+            if acomparar != -1:
                 compradasporpurchase += 1
-
     totalobras = lt.size(listarespuesta)
-    return totalobras, compradasporpurchase
+    sublista1 = lt.subList(listarespuesta,1,3)
+    sublista2 = lt.subList(listarespuesta,(totalobras-2),3)
+    listarespuesta3y3 = lt.newList(datastructure="ARRAY_LIST")
+    for artwork in lt.iterator(sublista1):
+        lt.addLast(listarespuesta3y3,artwork)
+    for artwork in lt.iterator(sublista2):
+        lt.addLast(listarespuesta3y3,artwork)
+    return totalobras, compradasporpurchase, listarespuesta3y3
 
 
 
