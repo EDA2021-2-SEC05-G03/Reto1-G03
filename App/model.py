@@ -78,6 +78,11 @@ def cmpArtistDate(artist1, artist2):
     n = (int(artist1['BeginDate']) < int(artist2['BeginDate']))
     return n
 
+def cmpmedio(medio1,medio2):
+    if medio1 in medio2:
+        return 0
+    else:
+        return 1
 
 # Construccion de modelos
 
@@ -152,11 +157,11 @@ def sortartworks2 (catalog,begin,end):
 
 def Clasification(catalog, artist):
     art = catalog["artists"]
-    medio_obras = lt.newList("ARRAY_LIST")
+    medio_obras = lt.newList(datastructure="ARRAY_LIST")
     for a in lt.iterator(art):
         if a["DisplayName"] == artist:
             id = a["ConstituentID"]
-    print(id)
+    
     artworks = catalog["artworks"]
     
     for w in lt.iterator(artworks):       
@@ -165,7 +170,8 @@ def Clasification(catalog, artist):
             #pos = lt.isPresent(medio_obras,medium)
             lt.addLast(medio_obras,medium)
        
-    print(medio_obras)
+    return medio_obras 
+    
 
 
     

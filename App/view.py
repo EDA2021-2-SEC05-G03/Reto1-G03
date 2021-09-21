@@ -218,7 +218,29 @@ while True:
     elif int(inputs[0]) == 5:  
         artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
         info = controller.artworksClasification(catalog, artista)
-        print(info)
+        tamaño_total_obras = lt.size(info)
+        copia_info = info.copy()
+        
+        tamaño_medios = lt.newList(datastructure= "ARRAY_LIST")
+        count=0
+        for medio in lt.iterator(info):
+            
+            count += 1
+            print(count)
+            """
+            nombre_medio = medio
+            repeticiones = 1
+            lt.removeFirst(copia_info)
+            presente = lt.isPresent(copia_info, nombre_medio)
+            while presente > 0:
+                repeticiones +=1
+                lt.deleteElement(copia_info, presente)
+                presente = lt.isPresent(copia_info, nombre_medio)
+            lt.addLast(tamaño_medios, nombre_medio)
+            lt.addLast(tamaño_medios, repeticiones)
+            """
+         
+        
             
     else:
         sys.exit(0)
