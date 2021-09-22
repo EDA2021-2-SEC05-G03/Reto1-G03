@@ -1,27 +1,4 @@
-﻿"""
- * Copyright 2020, Departamento de sistemas y Computación, Universidad
- * de Los Andes
- *
- *
- * Desarrolado para el curso ISIS1225 - Estructuras de Datos y Algoritmos
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
- """
-
-
-import config as cf
+﻿import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
@@ -29,19 +6,11 @@ from time import process_time
 assert cf
 import sys
 from datetime import datetime
-
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
-
-
-"""
-La vista se encarga de la interacción con el usuario
-Presenta el menu de opciones y por cada seleccion
-se hace la solicitud al controlador para ejecutar la
-operación solicitada
-"""
-
 catalog = None
+
+#Imprimir el Menú
 def printMenu():
     print ("Bienvenido")
     print ("1. Cargar archivos.")
@@ -55,21 +24,14 @@ def printMenu():
     print ("0. Salir")
 
 
-
+#Iniciador de catalogos y carga de datos
 def initCatalog(tipolista: str):
-    """
-    Inicializa el catalogo del museo
-    """
     return controller.initCatalog(tipolista)
-
 def loadData(catalog):
-    """
-    Carga los datos en la estructura de datos
-    """
     controller.loadData(catalog)
 
-catalog = None
 
+#Funciones de imprimir: listas y cmpfunction de estas
 def printsortartist(lista):
     print(" ")
     print("-" * 100)
@@ -80,7 +42,6 @@ def printsortartist(lista):
         print("Nacionalidad: " + artists["Nationality"])
         print("Género: " + artists["Gender"])
         print("-" * 100)
-
 def printsortartworks(lista, listaartistas):
     print("-" * 188)
     for artworks in lt.iterator(lista):
@@ -108,8 +69,6 @@ def printsortartworks(lista, listaartistas):
             nombre = nombre["DisplayName"]
             print ("- "+nombre)
             print ("-"*188)
-
-
 def agregarlistaartistas(listaartistas, listabuscar):
     listafinal = lt.newList(datastructure="ARRAY_LIST",cmpfunction=cmpfunctionlistaartistas)
     for artwork in lt.iterator(listabuscar):
@@ -122,21 +81,16 @@ def agregarlistaartistas(listaartistas, listabuscar):
             lt.addLast(listafinal, artista)
             lt.addLast(listafinal, artista["ConstituentID"])
     return listafinal
-
-
 def cmpfunctionlistaartistas (artist1,artist2):
     if artist1 in artist2:
         return 0
     else:
         return 1
         
-"""
-Menu principal
-"""
+#Menú Principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    
     if int(inputs[0]) == 1:
         print ("Escoja el tipo de lista que quiere utilizar: ")
         print ("1. Array List.\n2. Single Linked")
@@ -154,8 +108,6 @@ while True:
         t2 = process_time()
         time = t2-t1
         print("El tiempo para cargar los archivos fue de:", str(time) , "s")     
-
-
     elif int(inputs[0]) == 2:
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
         while lt.size(catalog["artworks"]) <= sizesublist:
@@ -176,8 +128,6 @@ while True:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
         print(sortedartworkstime) 
-
-
     elif int(inputs[0]) == 3:   
         begin = int(input("Indique el año inicial del rango: "))
         end = int(input("Indique el año final del rango: "))
@@ -193,10 +143,6 @@ while True:
             info = controller.sortartistsDates(catalog,begin,end)
             print("Hay un total de "+ str(info[0]) + " artistas entre " + str(begin)+ " - "+ str(end))   
             printsortartist(info[1]) 
-            
-
-
-
     elif int(inputs[0]) == 4:
         begin = (input("Indique la fecha inicial del rango en formato numérico año-mes-día: "))
         end = (input("Indique la fecha final del rango en formato numérico año-mes-día: "))
@@ -218,16 +164,13 @@ while True:
             listaartistas = lt.newList(datastructure= "ARRAY_LIST", cmpfunction= cmpfunctionlistaartistas)
             x = agregarlistaartistas(listaartistas, info[2])
             printsortartworks(info[2],x)
-
     elif int(inputs[0]) == 5:  
         artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
         info = controller.artworksClasification(catalog, artista)
         lista = info[0]
         tamaño_total_obras = lt.size(lista)
         tamaño_medios = lt.newList(datastructure= "ARRAY_LIST")
-
-        print("El artista " +artista+" tiene un total de "+ str(tamaño_total_obras)+" de obras en el museo.")
-      
+        print("El artista " +artista+" tiene un total de "+ str(tamaño_total_obras)+" de obras en el museo.")  
         for medio in lt.iterator(lista):
             posicion = lt.isPresent(tamaño_medios,medio)
             if posicion == 0:
@@ -243,12 +186,10 @@ while True:
         # TOP 5
         top = controller.topNat(tamaño_medios)
         print("+"+("-"*51)+"+")  
-        
         print("|"+"TOP 5 TÉCNICAS".center(51)+"|")  
         print("+"+("-"*51)+"+") 
         x = 0
         while x < 10:
-            
             print ("|"+top["elements"][x].center(40)+"|"+top["elements"][x+1].center(10)+"|")
             print("+"+("-"*51)+"+") 
             x+=2
@@ -265,10 +206,13 @@ while True:
             print("|"+info_medio[0]["elements"][f].center(105)+" | "+info_medio[1]["elements"][f].center(13)+" | "+info_medio[2]["elements"][f].center(15)+" | "+info_medio[3]["elements"][f].center(74)+" | ")
             print("+"+("-"*217)+"+")
             f+=1
-
-
-        
-
+    elif int(inputs[0]) == 6:  
+        nacionalidades = controller.artworksNat(catalog)
+        tamaños = controller.countNat(nacionalidades)
+        top = controller.topNat(tamaños)
+    elif int(inputs[0]) == 7:
+        departamento = input("Ingrese el departamento a evaluar su costo de transporte: ")
+        info = controller.costotransporte(catalog,departamento)
     else:
         sys.exit(0)
 sys.exit(0)
