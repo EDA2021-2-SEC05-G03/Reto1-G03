@@ -155,7 +155,7 @@ def info_medios(catalog, id, top):
                 di = w["Dimensions"]
                 lt.addLast(dimensiones,di)
     return(titulos,fechas,medio,dimensiones)        
-def topNat(tamaño_medios):
+def topMed(tamaño_medios):
     num = lt.newList(datastructure= "ARRAY_LIST")
     cant = lt.size(tamaño_medios)
     i = 0
@@ -172,18 +172,18 @@ def topNat(tamaño_medios):
     orden = ms.sort(num,cmpNat)
 
     f = lt.size(orden)
-    natorden = lt.newList(datastructure= "ARRAY_LIST")
+    medorden = lt.newList(datastructure= "ARRAY_LIST")
     
     for w in orden["elements"]:  
         pos = lt.isPresent(tamaño_medios,w)             
         m = lt.getElement(tamaño_medios, pos-1)
-        lt.addLast(natorden,m)
+        lt.addLast(medorden,m)
         n = lt.getElement(tamaño_medios, pos)
         lt.deleteElement(tamaño_medios, pos)
         delete = "0"
         lt.insertElement(tamaño_medios, delete, pos)
-        lt.addLast(natorden,n)
-    return natorden
+        lt.addLast(medorden,n)
+    return medorden
 def costotransporte(catalog,departamentoentrada): 
     
     departamentolista = lt.newList(datastructure="ARRAY_LIST")

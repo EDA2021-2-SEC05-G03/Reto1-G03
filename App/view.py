@@ -15,12 +15,11 @@ def printMenu():
     print ("Bienvenido")
     print ("1. Cargar archivos.")
     print ("2. Ordenar por orden de adquisición de las obras")
-    print ("3. Listar cronológicamente los artistas")
-    print ("4. Listar cronológicamente las adquisiciones.")
-    print ("5. Clasificar las obras de un artista por técnica")
-    print ("6. Clasificar las obras por la nacionalidad de sus creadores.")
-    print ("7. Costo de transportar las obras de un departamento a otro")
-    print ("8. Proponer una nueva exposción en el museo")
+    print ("3. REQ. 1: Listar cronológicamente los artistas")
+    print ("4. REQ. 2: Listar cronológicamente las adquisiciones.")
+    print ("5. REQ. 3: Clasificar las obras de un artista por técnica")
+    print ("6. REQ. 4: Clasificar las obras por la nacionalidad de sus creadores.")
+    print ("7. REQ. 5: Costo de transportar las obras de un departamento a otro")
     print ("0. Salir")
 
 
@@ -184,7 +183,7 @@ while True:
                 lt.deleteElement(tamaño_medios, posicion+1)
                 lt.insertElement(tamaño_medios, x, posicion+1)
         # TOP 5
-        top = controller.topNat(tamaño_medios)
+        top = controller.topMed(tamaño_medios)
         print("+"+("-"*51)+"+")  
         print("|"+"TOP 5 TÉCNICAS".center(51)+"|")  
         print("+"+("-"*51)+"+") 
