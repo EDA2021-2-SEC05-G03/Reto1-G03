@@ -66,6 +66,12 @@ def sortartistsDates(catalog,begin,end):
 def artworksClasification(catalog, artista):
     return model.Clasification(catalog,artista)
 
+def topNat(num):
+    return model.topNat(num)
+
+def info_medios(catalog,id,top):
+    return model.info_medios(catalog,id,top)
+
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """

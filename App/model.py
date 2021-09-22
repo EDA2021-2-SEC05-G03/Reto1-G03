@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import isPresent
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as ss
@@ -78,11 +79,16 @@ def cmpArtistDate(artist1, artist2):
     n = (int(artist1['BeginDate']) < int(artist2['BeginDate']))
     return n
 
+def cmpNat(nat1,nat2):
+    n = (int(nat1) > int(nat2))
+    return n
+
 def cmpmedio(medio1,medio2):
     if medio1 in medio2:
         return 0
     else:
         return 1
+
 
 # Construccion de modelos
 
@@ -167,15 +173,60 @@ def Clasification(catalog, artist):
     for w in lt.iterator(artworks):       
         if w["ConstituentID"].strip("[]") == id:                    
             medium = w["Medium"]
-            #pos = lt.isPresent(medio_obras,medium)
             lt.addLast(medio_obras,medium)
        
-    return medio_obras 
+    return (medio_obras,id) 
     
-
+def info_medios(catalog, id, top):
+    artworks = catalog["artworks"] 
+    titulos = lt.newList(datastructure= "ARRAY_LIST")
+    fechas = lt.newList(datastructure= "ARRAY_LIST")
+    medio = lt.newList(datastructure= "ARRAY_LIST")
+    dimensiones = lt.newList(datastructure= "ARRAY_LIST")
+    for w in lt.iterator(artworks):       
+        if w["ConstituentID"].strip("[]") == id:                    
+            medium = w["Medium"]
+            if medium == top:
+                tit = w["Title"]
+                lt.addLast(titulos,tit)
+                fe = w["DateAcquired"]
+                lt.addLast(fechas,fe)
+                lt.addLast(medio,medium)
+                di = w["Dimensions"]
+                lt.addLast(dimensiones,di)
+    return(titulos,fechas,medio,dimensiones)     
 
     
-               
+def topNat(tamaño_medios):
+    num = lt.newList(datastructure= "ARRAY_LIST")
+    cant = lt.size(tamaño_medios)
+    i = 0
+    while i in range(0,cant):
+        nu = i%2
+        if nu == 0:
+            el = lt.getElement(tamaño_medios,i)
+            lt.addLast(num,el)
+        i+=1
+    g = lt.size(num)
+    print("Con un total de "+ str(g) +" tecnicas diferentes")
+    sub = lt.subList(num,0,g)
+    sub = sub.copy()
+    orden = ms.sort(num,cmpNat)
+
+    f = lt.size(orden)
+    natorden = lt.newList(datastructure= "ARRAY_LIST")
+    
+    for w in orden["elements"]:  
+        pos = lt.isPresent(tamaño_medios,w)             
+        m = lt.getElement(tamaño_medios, pos-1)
+        lt.addLast(natorden,m)
+        n = lt.getElement(tamaño_medios, pos)
+        lt.deleteElement(tamaño_medios, pos)
+        delete = "0"
+        lt.insertElement(tamaño_medios, delete, pos)
+        lt.addLast(natorden,n)
+    return natorden
+
 
 
         

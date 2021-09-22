@@ -71,6 +71,8 @@ def loadData(catalog):
 catalog = None
 
 def printsortartist(lista):
+    print(" ")
+    print("-" * 100)
     for artists in lt.iterator(lista):
         print("Nombre: " + artists["DisplayName"])
         print("Fecha de Nacimiento: " + artists["BeginDate"])
@@ -80,7 +82,7 @@ def printsortartist(lista):
         print("-" * 100)
 
 def printsortartworks(lista, listaartistas):
-    print("-" * 100)
+    print("-" * 188)
     for artworks in lt.iterator(lista):
         print ("Titulo: " + artworks["Title"])
         print ("Fecha: " + artworks["Date"])
@@ -97,15 +99,15 @@ def printsortartworks(lista, listaartistas):
                 posartista = posartista - 1
                 nombre = lt.getElement(listaartistas,posartista)
                 nombre = nombre["DisplayName"]
-                print (nombre)
-            print ("-"*100)
+                print ("- "+nombre)
+            print ("-"*188)
         else: 
             posartista = lt.isPresent(listaartistas,artworks["ConstituentID"])
             posartista = posartista - 1
             nombre = lt.getElement(listaartistas, posartista)
             nombre = nombre["DisplayName"]
-            print (nombre)
-            print ("-"*100)
+            print ("- "+nombre)
+            print ("-"*188)
 
 
 def agregarlistaartistas(listaartistas, listabuscar):
@@ -210,34 +212,63 @@ while True:
             print("La fecha de fin no puede ser menor que la de inicio.")
         else:
             info = controller.sortartworks2(catalog,begin,end)
+            print(" ")
             print ("Numero de obras: " + str(info[0]))
             print ("Adquiridas por purchase: " + str(info[1]))
             listaartistas = lt.newList(datastructure= "ARRAY_LIST", cmpfunction= cmpfunctionlistaartistas)
             x = agregarlistaartistas(listaartistas, info[2])
             printsortartworks(info[2],x)
+
     elif int(inputs[0]) == 5:  
         artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
         info = controller.artworksClasification(catalog, artista)
-        tamaño_total_obras = lt.size(info)
+        lista = info[0]
+        tamaño_total_obras = lt.size(lista)
         tamaño_medios = lt.newList(datastructure= "ARRAY_LIST")
-        contadorif = 0
-        contadorelse = 0
-        for medio in lt.iterator(info):
+
+        print("El artista " +artista+" tiene un total de "+ str(tamaño_total_obras)+" de obras en el museo.")
+      
+        for medio in lt.iterator(lista):
             posicion = lt.isPresent(tamaño_medios,medio)
             if posicion == 0:
-                contadorif += 1
+                
                 lt.addLast(tamaño_medios, medio)
                 lt.addLast(tamaño_medios, str(1))
             else:
-                contadorelse += 1
                 x = lt.getElement(tamaño_medios, (posicion + 1))
                 x = int(x) + 1
                 x = str(x)
                 lt.deleteElement(tamaño_medios, posicion+1)
                 lt.insertElement(tamaño_medios, x, posicion+1)
-        # Imprimir tamaño_medios
-        for x in lt.iterator(tamaño_medios):
-            print (x)
+        # TOP 5
+        top = controller.topNat(tamaño_medios)
+        print("+"+("-"*51)+"+")  
+        
+        print("|"+"TOP 5 TÉCNICAS".center(51)+"|")  
+        print("+"+("-"*51)+"+") 
+        x = 0
+        while x < 10:
+            
+            print ("|"+top["elements"][x].center(40)+"|"+top["elements"][x+1].center(10)+"|")
+            print("+"+("-"*51)+"+") 
+            x+=2
+        #Obras Medio TOP
+        main = top["elements"][0]
+        info_medio = controller.info_medios(catalog,info[1],main)
+        print(" ")
+        l = len(info_medio)
+        f=0
+        print("+"+("-"*217)+"+")
+        print("|"+"Titulo".center(105)+" | "+"Fecha".center(13)+" | "+"Medio".center(15)+" | "+"Dimensiones".center(74)+" | ")
+        print("+"+("-"*217)+"+")
+        while f < l-1:
+            print("|"+info_medio[0]["elements"][f].center(105)+" | "+info_medio[1]["elements"][f].center(13)+" | "+info_medio[2]["elements"][f].center(15)+" | "+info_medio[3]["elements"][f].center(74)+" | ")
+            print("+"+("-"*217)+"+")
+            f+=1
+
+
+        
+
     else:
         sys.exit(0)
 sys.exit(0)
