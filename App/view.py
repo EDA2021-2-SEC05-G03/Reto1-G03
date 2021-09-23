@@ -139,7 +139,6 @@ while True:
         time = t2-t1
         print("El tiempo para cargar los archivos fue de:", str(time) , "s")     
     elif int(inputs[0]) == 2:
-        t1 = process_time()
         sizesublist = int(input("Escoja el tamaño de la sublista: "))
         while lt.size(catalog["artworks"]) <= sizesublist:
             sizesublist = int(input("Escoja el tamaño de la sublista valido: "))
@@ -159,12 +158,8 @@ while True:
             typeofsort = "quick"
         sortedartworkstime = controller.sortartworks(catalog,sizesublist,typeofsort)
         print(sortedartworkstime) 
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time))
-
     elif int(inputs[0]) == 3:  
-        t1 = process_time() 
+
         begin = int(input("Indique el año inicial del rango: "))
         end = int(input("Indique el año final del rango: "))
         a = len(str(begin))
@@ -179,11 +174,8 @@ while True:
             info = controller.sortartistsDates(catalog,begin,end)
             print("Hay un total de "+ str(info[0]) + " artistas entre " + str(begin)+ " - "+ str(end))   
             printsortartist(info[1]) 
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time))    
     elif int(inputs[0]) == 4:
-        t1 = process_time()
+
         begin = (input("Indique la fecha inicial del rango en formato numérico año-mes-día: "))
         end = (input("Indique la fecha final del rango en formato numérico año-mes-día: "))
         a = len(str(begin))
@@ -204,11 +196,7 @@ while True:
             listaartistas = lt.newList(datastructure= "ARRAY_LIST", cmpfunction= cmpfunctionlistaartistas)
             x = agregarlistaartistas(listaartistas, info[2])
             printsortartworks(info[2],x)
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time)) 
     elif int(inputs[0]) == 5:
-        t1 = process_time()
         artista = (input("Ingrese el nombre del artista de las obras a clasificar: "))    
         info = controller.artworksClasification(catalog, artista)
         lista = info[0]
@@ -250,11 +238,7 @@ while True:
             print("|"+info_medio[0]["elements"][f].center(105)+" | "+info_medio[1]["elements"][f].center(13)+" | "+info_medio[2]["elements"][f].center(15)+" | "+info_medio[3]["elements"][f].center(74)+" | ")
             print("+"+("-"*217)+"+")
             f+=1
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time)) 
     elif int(inputs[0]) == 6: 
-        t1 = process_time() 
         nacionalidades = controller.artworksNat(catalog)
         tamaños = controller.countNat(nacionalidades)
         top = controller.topNat(tamaños)
@@ -268,17 +252,10 @@ while True:
             print(a.center(30)+"|"+b.center(7))
             print("-"*39)
             t+=2
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time))
     elif int(inputs[0]) == 7:
-        t1 = process_time() 
         departamento = input("Ingrese el departamento a evaluar su costo de transporte: ")
         info = controller.costotransporte(catalog,departamento)
         printtransport(info,departamento)
-        t2 = process_time()
-        time = t2-t1
-        print("---"+str(time))
     else:
         sys.exit(0)
 sys.exit(0)
