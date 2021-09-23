@@ -312,6 +312,7 @@ def countNat(lista):
             lt.deleteElement(tamaño_n, posicion+1)
             lt.insertElement(tamaño_n, x, posicion+1)
     return tamaño_n
+
 def topNat(lst):
     
     num = lt.newList(datastructure = "ARRAY_LIST")
@@ -350,4 +351,4 @@ def topNat(lst):
             lt.changeInfo(natorden, pos1, "Nationality unknown")
             lt.deleteElement(natorden, pos2)
             lt.deleteElement(natorden, pos2)
-    print(natorden)     
+    return natorden     

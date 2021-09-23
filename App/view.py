@@ -240,6 +240,17 @@ while True:
         nacionalidades = controller.artworksNat(catalog)
         tamaños = controller.countNat(nacionalidades)
         top = controller.topNat(tamaños)
+
+        print("Nationality".center(30)+"|"+"Artworks".center(7))
+        print("-"*39)
+        t = 0
+        while t < 20:
+            a = str(top["elements"][t])
+            b = str(top["elements"][t+1])
+
+            print(a.center(30)+"|"+b.center(7))
+            print("-"*39)
+            t+=2
     elif int(inputs[0]) == 7:
         departamento = input("Ingrese el departamento a evaluar su costo de transporte: ")
         info = controller.costotransporte(catalog,departamento)
