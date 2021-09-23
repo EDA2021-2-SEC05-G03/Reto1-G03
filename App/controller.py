@@ -36,7 +36,7 @@ def topMed(num):
 def info_medios(catalog,id,top):
     return model.info_medios(catalog,id,top)
 def costotransporte(catalog,departamento):
-    model.costotransporte(catalog,departamento)
+    return model.costotransporte(catalog,departamento)
 def artworksNat(catalog):
     return model.artworksNat(catalog)
 def countNat(catalog):

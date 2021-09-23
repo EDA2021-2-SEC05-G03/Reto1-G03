@@ -185,7 +185,6 @@ def topMed(tamaño_medios):
         lt.addLast(medorden,n)
     return medorden
 def costotransporte(catalog,departamentoentrada): 
-    
     departamentolista = lt.newList(datastructure="ARRAY_LIST")
     artworks= catalog["artworks"]
     for obra in lt.iterator(artworks):
@@ -215,11 +214,9 @@ def costotransporte(catalog,departamentoentrada):
         costodefecto = 48.00
         costomayor = float(0)
         costomultiplicar = 72.00
-
         # Costo por kilo.
         if obra["Weight (kg)"] != 0:
             costokilo = costomultiplicar * float(obra["Weight (kg)"])
-
         #Circulo o esféra
         if obra["Diameter (cm)"] != 0:
             print ("AAAAAAAAAAAAAAAAAAAAAA")
@@ -233,7 +230,6 @@ def costotransporte(catalog,departamentoentrada):
                 radio = ((float(obra["Diameter (cm)"]) * (1/100))/2)
                 volumen = (radio*radio)*float(obra["Height (cm)"])*3.1416
                 costovolumen = volumen * costomultiplicar
-        
         #Cuadro o bloque
         if obra["Height (cm)"] != 0  or obra["Length (cm)"] != 0:
             #Con length
@@ -265,20 +261,14 @@ def costotransporte(catalog,departamentoentrada):
         if costoarea == 0 and costovolumen == 0 and costokilo ==0:
             costomayor = costodefecto
         obra["Costo"] = costomayor
-
         costototal += costomayor
     mascaros = ms.sort(departamentolista, cmpfunctionmascaros)
     mascaros = lt.subList(mascaros,1,5)
     masviejos = ms.sort(departamentolista, cmpfunctionantiguedad)
     masviejos = lt.subList(masviejos,1,5)
-
-    for l in lt.iterator(mascaros):
-        print(l["Costo"])
-    
-    for l in lt.iterator(masviejos):
-        print(l["Date"])
-    
-    return tamañodepartamento, costototal, mascaros, masviejos
+    respuesta = (tamañodepartamento,costototal,mascaros,masviejos)
+    print (type(respuesta))
+    return respuesta
 def artworksNat(catalog):
     artwork = catalog["artworks"]
     ids = lt.newList(datastructure="ARRAY_LIST")

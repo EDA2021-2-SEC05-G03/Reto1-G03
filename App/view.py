@@ -22,7 +22,6 @@ def printMenu():
     print ("7. REQ. 5: Costo de transportar las obras de un departamento a otro")
     print ("0. Salir")
 
-
 #Iniciador de catalogos y carga de datos
 def initCatalog(tipolista: str):
     return controller.initCatalog(tipolista)
@@ -85,7 +84,39 @@ def cmpfunctionlistaartistas (artist1,artist2):
         return 0
     else:
         return 1
-        
+def printtransport(info,departamento):
+    #tamañodepartamento, costototal, mascaros, masviejos
+    print ("=" * 150)
+    print ("El total de obras para la categoría " + departamento + " es de: " + str(info[0]) )
+    print ("El costo total de transportar este departamento es de " + str(round(info[1],2)) + " USD apróximadamente.")
+    print ("=" * 150)
+    print ("El TOP 5 de obras mas caras son: ")
+    print ("=" * 150)
+    for obra in lt.iterator(info[2]):
+        print("Object ID: " + obra["ObjectID"] )
+        print("Título: "+ obra["Title"])
+        ###
+        print("Clasificación: " + obra["Department"])
+        print("Fecha de la obra: " + obra["Date"])
+        print("Medio: " + obra["Classification"])
+        print("Dimensiones: " + obra["Dimensions"])
+        print ("Costo de transporte: " + str(obra["Costo"]) + " USD")
+        print ("URL: " + obra["URL"])
+        print ("-" * 150)
+    print ("="*150)
+    print ("El TOP 5 obras mas viejas de la categoría a transportar:")
+    print ("="*150)
+    for obra in lt.iterator(info[3]):
+        print("Object ID: " + obra["ObjectID"] )
+        print("Título: "+ obra["Title"])
+        ###
+        print("Clasificación: " + obra["Department"])
+        print("Fecha de la obra: " + obra["Date"])
+        print("Medio: " + obra["Classification"])
+        print("Dimensiones: " + obra["Dimensions"])
+        print ("Costo de transporte: " + str(obra["Costo"]) + " USD")
+        print ("URL: " + obra["URL"])
+        print ("-" * 150)
 #Menú Principal
 while True:
     printMenu()
@@ -212,6 +243,7 @@ while True:
     elif int(inputs[0]) == 7:
         departamento = input("Ingrese el departamento a evaluar su costo de transporte: ")
         info = controller.costotransporte(catalog,departamento)
+        printtransport(info,departamento)
     else:
         sys.exit(0)
 sys.exit(0)
